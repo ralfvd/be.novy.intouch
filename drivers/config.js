@@ -3,7 +3,7 @@
 module.exports = {
 	devices: {
 		aintouchlight: {
-			capabilities: ['onoff'],
+			capabilities: ['other'],
 			pair: {
 				viewOrder: ['generic_imitate', 'generic_test_button_2', 'generic_done'],
 				views: [{
@@ -74,7 +74,7 @@ module.exports = {
 			driver: '../433_generator/drivers/intouchlight.js',
 			signal: 'intouchlight',
 			debounceTimeout: 1000,
-			class: 'light',
+			class: 'other',
 			triggers: [{
 				id: 'aintouchlight:received',
 				title: 'Signal received from remote',
@@ -93,6 +93,7 @@ module.exports = {
 					filter: 'driver_id=aintouchlight'
 				}]
 			}],
+			icon: '../433_generator/assets/aintouchlight/icon.svg',
 			name: 'Novy Intouch'
 		}
 	}

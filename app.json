@@ -40,9 +40,9 @@
       "name": {
         "en": "Novy Intouch"
       },
-      "class": "light",
+      "class": "other",
       "capabilities": [
-        "onoff"
+        "other"
       ],
       "images": {
         "small": "./433_generator/assets/aintouchlight/images/small.jpg",

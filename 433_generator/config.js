@@ -18,8 +18,8 @@ module.exports = {
 				maximalLength: 18, // all signals should be of this length
 			},
 			debounceTimeout: 1000,
-			class: 'light',
-			capabilities: ['onoff'],
+			class: 'other',
+			capabilities: ['other'],
 			pair: {
 				viewOrder: [
 					'generic_imitate',
@@ -55,6 +55,7 @@ module.exports = {
 	devices: {
 		aintouchlight: {
 			extends: 'intouchlight',
+			icon: './assets/aintouchlight/icon.svg',
 			name: 'Novy Intouch',
 			images: {
 				small: './assets/aintouchlight/images/small.jpg',

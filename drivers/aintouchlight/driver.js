@@ -1,7 +1,7 @@
 'use strict';
 /* eslint-disable */
 const config = {
-	capabilities: ['onoff'],
+	capabilities: ['other'],
 	pair: {
 		viewOrder: ['generic_imitate', 'generic_test_button_2', 'generic_done'],
 		views: [{
@@ -34,7 +34,7 @@ const config = {
 				append: [],
 				svg: '../../433_generator/assets/aintouchlight/icon.svg',
 				title: 'Test the lights',
-				body: 'Press the test button ; the lights should toggle on/off',
+				body: 'Press the test button ; your lights should toggle on/off',
 				svgWidth: '80vw',
 				svgHeight: '70vh',
 				previous: true,
@@ -72,7 +72,7 @@ const config = {
 	driver: '../../433_generator/drivers/intouchlight.js',
 	signal: 'intouchlight',
 	debounceTimeout: 1000,
-	class: 'light',
+	class: 'other',
 	triggers: [{
 		id: 'aintouchlight:received',
 		title: 'Signal received from remote',
@@ -91,12 +91,13 @@ const config = {
 			filter: 'driver_id=aintouchlight'
 		}]
 	}],
+	icon: '../../433_generator/assets/aintouchlight/icon.svg',
 	name: 'Novy Intouch'
 };
 const Driver = require(config.driver);
 const driver = new Driver(config);
 module.exports = Object.assign(
   {},
-	driver.getExports(),
+	driver.getExports(), 
 	{ init: (devices, callback) => driver.init(module.exports, devices, callback) }
 );
