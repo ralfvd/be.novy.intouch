@@ -34,7 +34,7 @@ test = test.filter((arr) => arr.length === 37);
 test.forEach(function(value) {
   console.log(value.join(','))
 });
-var sof = test.map(arr => arr.slice(0, 1)).reduce((result,arr) => arr.map((timing, index) => (result[index] || 0) + (timing / test.length )));
+//var sof = test.map(arr => arr.slice(0, 1)).reduce((result,arr) => arr.map((timing, index) => (result[index] || 0) + (timing / test.length )));
 
 var recordData=test;
 //console.log(recordData[0].join('-'));
