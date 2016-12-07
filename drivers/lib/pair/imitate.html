@@ -1,0 +1,74 @@
+<div class="centered-container">
+	<div id="image-container"></div>
+	<div id="body"><span class="content"></span></div>
+	<div class="foundAnimation" id="foundBackground" style="display:none;"></div>
+	<i class="fa fa-check-circle foundAnimation" id="found" style="display:none;" aria-hidden="true"></i>
+</div>
+
+<script>
+	var idPrefix = '[data-id="' + options.id + '"] ';
+	$(idPrefix + '#body > span').html(__(options.body));
+	var $imageContainer = $(idPrefix + '#image-container');
+	$imageContainer.css('width', options.svgWidth).css('height', options.svgHeight);
+
+	$imageContainer.html(options.svg);
+	$imageContainer.highlight();
+
+	var found = false;
+	Homey.on('frame', function (data) {
+		if(!found) {
+			found = true;
+			Homey.emit('set_device', data, function (err, device) {
+				if (err) {
+					if((err.message || err) !== '433_generator.error.invalid_device') {
+						Homey.alert(__(err.message || err));
+					}
+					found = false;
+					return;
+				}
+				const dataKey = JSON.stringify(device.data);
+				window.selected_devices = [ dataKey ];
+				window.found_devices = {};
+				window.found_devices[dataKey] = device;
+				var $foundElems = $(idPrefix + '.foundAnimation');
+				$foundElems.show();
+				setTimeout(function () {
+					$foundElems.addClass('fadeOut');
+					setTimeout(nextView, 400);
+				}, 500);
+			});
+		}
+	});
+</script>
+
+<style>
+	#found {
+		z-index: 2;
+		position: absolute;
+		top: 20vh;
+		left: 38vw;
+		font-size: 30vh;
+		color: #080;
+		opacity: 1;
+	}
+
+	#foundBackground {
+		z-index: 1;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		position: absolute;
+		background-color: #FFF;
+		opacity: 0.8;
+	}
+
+	.fadeOut {
+		-webkit-transition: all 0.5s ease-in-out;
+		-moz-transition: all 0.5s ease-in-out;
+		-ms-transition: all 0.5s ease-in-out;
+		-o-transition: all 0.5s ease-in-out;
+		transition: all 0.5s ease-in-out;
+		opacity: 0 !important;
+	}
+</style>

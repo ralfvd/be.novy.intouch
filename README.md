@@ -1,1 +1,1 @@
-# be.novy.intouch
+Implementation of a doorbell of someone

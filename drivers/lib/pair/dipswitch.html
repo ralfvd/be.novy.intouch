@@ -1,0 +1,118 @@
+<div class="centered-container">
+	<div id="dipswitch-container">
+		<div id="dipswitch" class="group"></div>
+	</div>
+	<div id="body"><span class="content"></span></div>
+</div>
+
+<script>
+	var $container = $('[data-id="' + options.id + '"] ');
+	$container.find('#body > span').html(__(options.body));
+	var $dipswitchContainer = $container.find('#dipswitch-container');
+	var $dipswitchElem = $dipswitchContainer.find('#dipswitch');
+	var $imageContainer = $(idPrefix + '#image-container');
+	$imageContainer.css('width', options.svgWidth).css('height', options.svgHeight);
+
+	$imageContainer.html(options.svg);
+	$imageContainer.highlight();
+
+	if (!$container.find('.view-navigation-next.dummy').length) {
+		var $nextButton = $container.find('.view-navigation-next');
+		var $nextButtonDummy = $nextButton.clone().addClass('dummy');
+		$nextButton.hide();
+		$nextButton.parent().append($nextButtonDummy);
+
+		$nextButtonDummy.on('click', function (e) {
+			Homey.emit('assert_device', function (err, device) {
+				if (err){
+					Homey.alert(__(err.message || err));
+					return;
+				}
+				Homey.emit('program_send', function (err) {
+					if (err){
+						Homey.alert(__(err.message || err));
+						return;
+					}
+					const dataKey = JSON.stringify(device.data);
+					window.selected_devices = [ dataKey ];
+					window.found_devices = {};
+					window.found_devices[dataKey] = device;
+					$nextButtonDummy.siblings('.view-navigation-next').click();
+				});
+			});
+			e.stopPropagation();
+			return false;
+		});
+	}
+
+	generateDipswitches(options.dipswitchList, $dipswitchElem, false);
+
+	Homey.emit('get_device', function (err, device) {
+		if (device && device.data && device.data.dipswitches) {
+			setDipswitchArray(device.data.dipswitches, $dipswitchElem);
+		} else {
+			Homey.emit('set_device_dipswitches', getDipswitchArray($dipswitchElem));
+		}
+	});
+
+	function generateDipswitches(dipswitchList, elem, connected) {
+		dipswitchList.forEach(function (symbol, index) {
+			if (Array.isArray(symbol)) {
+				var group = $('<div>').addClass('group' + (!connected ? ' connected' : ''));
+				generateDipswitches(symbol, group, !connected);
+				elem.append(group);
+			} else {
+				elem.append(
+					$('<div>').addClass('item').append(
+						$('<span>').addClass('switch' + (connected && index === 0 ? ' on' : '')).append(
+							$('<span>').addClass('knob')
+						).click(function () {
+							if ($(this).parent().parent().is('.group.connected')) {
+								$(this).parent().siblings('.item').find('.switch').removeClass('on');
+								$(this).addClass('on');
+							} else {
+								$(this).toggleClass('on');
+							}
+							Homey.emit('set_device_dipswitches', getDipswitchArray($dipswitchElem));
+						}),
+						$('<span>').addClass('symbol').html(symbol)
+					)
+				);
+			}
+		});
+	}
+
+	function getDipswitchArray(elem) {
+		var result = [];
+		elem.children().each(function () {
+			if ($(this).is('.item')) {
+				result.push($(this).find('.switch').hasClass('on'))
+			} else if ($(this).is('.group')) {
+				result.push(getDipswitchArray($(this)));
+			}
+		});
+		return result;
+	}
+
+	function setDipswitchArray(dipswitches, elem) {
+		var $items = elem.children('.item');
+		var $groups = elem.children('.group');
+		dipswitches.forEach(function (state) {
+			if (Array.isArray(state)) {
+				var $groupElem = $($groups.splice(0, 1)[0]);
+				if ($groupElem.length) {
+					setDipswitchArray(state, $groupElem);
+				}
+			} else {
+				var $switchElem = $($items.splice(0, 1)[0]).find('.switch');
+				if ($switchElem.length) {
+					if (state) {
+						$switchElem.addClass('on');
+					} else {
+						$switchElem.removeClass('on');
+					}
+				}
+			}
+		});
+	}
+</script>

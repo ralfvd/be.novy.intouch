@@ -1,0 +1,57 @@
+<script type="text/javascript">
+Homey.setTitle( __('manager.drivers.www.title_adding') );
+
+var devices_paired = 0;
+
+if( window.selected_devices.length > 0 ) {
+
+	window.selected_devices.forEach(function(selected_device){
+
+		var dataObj = window.found_devices[ selected_device ];
+
+		$('#devices-list label.name').each(function(){
+			if( $(this).attr('for') === 'device-' + selected_device ) {
+				dataObj.name = $(this).find('.name').val();
+			}
+		})
+
+		if( typeof window.found_devices[ selected_device ].icon != 'undefined' ) {
+			dataObj.icon = window.found_devices[ selected_device ].icon;
+		}
+
+		// check if virtual device class is checked
+		var virtualDeviceClass;
+		$('.deviceclasses-list input:checked').each(function(){
+			if( $(this).attr('name') === ( 'deviceClass-' + selected_device ) ) {
+				virtualDeviceClass = $(this);
+			}
+		});
+
+		if( virtualDeviceClass && virtualDeviceClass.length > 0 ) {
+			var virtualClass = $(virtualDeviceClass).val();
+			if( virtualClass != 'socket' ) {
+				dataObj.virtualClass = virtualClass;
+				dataObj.virtualCapabilities = $(virtualDeviceClass).data('capabilities').split(',');
+			}
+		}
+
+		Homey.addDevice(dataObj, function( err, result ){
+			if( err ) alert( err.code || err );
+
+			devices_paired++;
+			if( devices_paired == window.selected_devices.length ) {
+				Homey.done();
+			}
+
+		});
+
+		Homey.emit('add_device', dataObj);
+
+	});
+
+} else {
+	Homey.done();
+}
+</script>
+
+<i class="loading fa fa-cog fa-spin"></i>

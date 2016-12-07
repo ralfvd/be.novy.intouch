@@ -1,0 +1,22 @@
+<script type="text/javascript">
+	Homey.emit('done', function (err, device) {
+		const dataKey = JSON.stringify(device.data);
+
+		var virtualDeviceClass;
+		$('.deviceclasses-list input:checked').each(function(){
+			if($(this).attr('name') === ('deviceClass-' + dataKey)){
+				virtualDeviceClass = $(this);
+			}
+		});
+		if (virtualDeviceClass) {
+			device.virtualClass = $(virtualDeviceClass).val();
+			device.virtualCapabilities = $(virtualDeviceClass).data('capabilities').split(',');
+		}
+
+		Homey.addDevice(device, function () {
+			Homey.done();
+		});
+	});
+</script>
+
+<i class="loading fa fa-cog fa-spin"></i>

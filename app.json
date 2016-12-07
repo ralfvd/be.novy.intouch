@@ -1,0 +1,106 @@
+{
+  "id": "com.a.doorbell",
+  "name": {
+    "en": "A Doorbell"
+  },
+  "version": "1.0.0",
+  "compatibility": ">=0.10",
+  "author": {
+    "name": "Bas Kiers",
+    "email": "bas@athom.nl"
+  },
+  "signals": {
+    "433": {
+      "aDoorbell": {
+        "sof": [
+          691
+        ],
+        "eof": [],
+        "words": [
+          [
+            332,
+            601
+          ],
+          [
+            668,
+            442
+          ]
+        ],
+        "interval": 10000,
+        "sensitivity": 0.9,
+        "repetitions": 20,
+        "minimalLength": 15,
+        "maximalLength": 17
+      }
+    }
+  },
+  "drivers": [
+    {
+      "id": "adoorbell",
+      "name": {
+        "en": ""
+      },
+      "class": "doorbell",
+      "capabilities": [
+        "alarm_generic"
+      ],
+      "images": {
+        "small": "./433_generator/assets/adoorbell/images/small.jpg",
+        "large": "./433_generator/assets/adoorbell/images/large.jpg"
+      },
+      "pair": [
+        {
+          "id": "generic_imitate",
+          "navigation": {}
+        },
+        {
+          "id": "generic_test_button_2",
+          "navigation": {
+            "prev": "generic_imitate",
+            "next": "generic_done"
+          }
+        },
+        {
+          "id": "generic_done",
+          "navigation": {}
+        }
+      ]
+    }
+  ],
+  "flow": {
+    "triggers": [
+      {
+        "id": "adoorbell:received",
+        "title": {
+          "en": "deviceClasses.doorbell.triggers.received.title"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=adoorbell"
+          }
+        ]
+      }
+    ],
+    "conditions": [],
+    "actions": [
+      {
+        "id": "adoorbell:send",
+        "title": {
+          "en": "deviceClasses.doorbell.triggers.send.title"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=adoorbell"
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": [
+    "homey:wireless:433"
+  ]
+}

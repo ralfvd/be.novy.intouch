@@ -1,0 +1,87 @@
+{
+	"deviceClasses": {
+		"doorbell": {
+			"views": {
+				"generic_imitate": {
+					"body": "deviceClasses.doorbell.views.generic_imitate.body"
+				},
+				"generic_test_button": {
+					"title": "deviceClasses.doorbell.views.generic_test_button.title"
+				},
+				"generic_test_button_2": {
+					"body": "deviceClasses.doorbell.views.generic_test_button_2.body"
+				}
+			},
+			"triggers": {
+				"received": {
+					"title": "deviceClasses.doorbell.triggers.received.title"
+				},
+				"send": {
+					"title": "deviceClasses.doorbell.triggers.send.title"
+				}
+			}
+		}
+	},
+	"views": {
+		"generic_imitate": {
+			"title": "Copy your remote signal\u0000"
+		},
+		"generic_done": {
+			"title": "Adding device!\u0000"
+		}
+	},
+	"433_generator": {
+		"generic": {
+			"on": "On\u0000",
+			"off": "Off\u0000",
+			"left": "Left\u0000",
+			"middle": "Middle\u0000",
+			"right": "Right\u0000",
+			"up": "Up\u0000",
+			"down": "Down\u0000",
+			"button_pressed": "Button is pressed\u0000",
+			"buttons": {
+				"1": "Button 1\u0000",
+				"2": "Button 2\u0000",
+				"3": "Button 3\u0000",
+				"4": "Button 4\u0000",
+				"5": "Button 5\u0000",
+				"A": "Button A\u0000",
+				"B": "Button B\u0000",
+				"C": "Button C\u0000",
+				"D": "Button D\u0000",
+				"E": "Button E\u0000",
+				"G": "Group Button\u0000",
+				"all": "All Button\u0000",
+				"bright": "Bright Button\u0000",
+				"dim": "Dim Button\u0000",
+				"left": "Left Button\u0000",
+				"middle": "Middle Button\u0000",
+				"right": "Right Button\u0000"
+			},
+			"channels": {
+				"1": "Channel 1\u0000",
+				"2": "Channel 2\u0000",
+				"3": "Channel 3\u0000",
+				"4": "Channel 4\u0000",
+				"5": "Channel 5\u0000",
+				"I": "Channel I\u0000",
+				"II": "Channel II\u0000",
+				"III": "Channel III\u0000",
+				"IV": "Channel IV\u0000",
+				"V": "Channel V\u0000",
+				"A": "Channel A\u0000",
+				"B": "Channel B\u0000",
+				"C": "Channel C\u0000",
+				"D": "Channel D\u0000",
+				"E": "Channel E\u0000"
+			}
+		},
+		"error": {
+			"device_exists": "This device is already paired with Homey.\u0000",
+			"no_device": "No device set to pair. Please close the pairing wizard and try again.\u0000",
+			"no_settings": "No settings object. Please try again.\u0000",
+			"invalid_device": "The device that was created is invalid. Please try again.\u0000"
+		}
+	}
+}

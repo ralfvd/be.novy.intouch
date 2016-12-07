@@ -1,0 +1,18 @@
+<div class="centered-container">
+	<div id="image-container"></div>
+	<div id="body"><span class="content"></span></div>
+</div>
+
+<script>
+	var idPrefix = '[data-id="' + options.id + '"] ';
+	$(idPrefix + '#body > span').html(__(options.body));
+	var $imageContainer = $(idPrefix + '#image-container');
+	$imageContainer.css('width', options.svgWidth).css('height', options.svg ? options.svgHeight : '0');
+
+	if(options.svg) {
+		$imageContainer.html(options.svg);
+		$imageContainer.highlight();
+	}else{
+		$imageContainer.detach();
+	}
+</script>

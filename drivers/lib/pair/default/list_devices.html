@@ -1,0 +1,124 @@
+<p id="error" style="display:none;" data-i18n="manager.drivers.www.window_close"></p>
+
+<ul id="devices-list"></ul>
+
+<script type="text/html" id="devices-list-template">
+	<li class="device">
+		<label for='device-{{:~stringify(data)}}' class="name">
+			<div class="overlay"></div>
+			{{if icon}}
+			<span class="icon" style="-webkit-mask-image: url({{:icon}})"></span>
+			{{/if}}
+			{{if _icon}}
+			<span class="icon" style="-webkit-mask-image: url({{:_icon}})"></span>
+			{{/if}}
+			<input class="name" value="{{:name}}" tabindex="-1" />
+		</label>
+		<label for='device-{{:~stringify(data)}}' class="checkbox">
+			<input id='device-{{:~stringify(data)}}' data-data='{{:~stringify(data)}}' type="checkbox" tabindex="{{:#index+1}}" />
+		</label>
+	</li>
+</script>
+
+<script type="text/javascript">
+window.found_devices = {};
+window.selected_devices = []; // array of stringified device_data objects
+
+var found_devices_list = [];
+
+var shiftKeyPressed = false;
+$(document).on('keyup keydown', function(e){
+	shiftKeyPressed = e.shiftKey
+});
+
+
+$(document).on('change', '#devices-list input:checkbox', function(e){
+
+	if( shiftKeyPressed ) {
+
+		var checkAll = $(this).prop('checked');
+
+		$('#devices-list input:checkbox').not(this).each(function(){
+			$(this).prop('checked', checkAll)
+			selectDevice( this, checkAll );
+		})
+
+	}
+
+	selectDevice( this, $(this).prop('checked') );
+
+});
+
+Homey.emit('list_devices', false, function( err, devices ){
+	if( err) return Homey.alert(err.toString(), 'error');
+
+	devices = devices.filter(filterDevices);
+
+	if( devices.length > 0 ) {
+		Homey.setTitle( __('manager.drivers.www.title_select') );
+
+		found_devices_list = found_devices_list.concat(devices);
+		render_devices();
+
+	} else {
+		Homey.setTitle( __('manager.drivers.www.title_nonew') );
+		Homey.setNavigationClose();
+		hideLoading();
+		$('#error').show();
+	}
+
+});
+
+Homey.on('list_devices', function( devices, callback ){
+
+	devices = devices.filter(filterDevices);
+
+	if( devices.length > 0 ) {
+		found_devices_list = found_devices_list.concat( devices );
+		render_devices();
+	}
+
+	callback( null, true );
+
+})
+
+function render_devices() {
+
+	if( found_devices_list.length > 0 ) hideLoading();
+
+	// render the views framework
+	var devices_render = $('#devices-list-template').render( found_devices_list, {
+		stringify: JSON.stringify
+	});
+	$('#devices-list').html( devices_render );
+
+	found_devices_list.forEach(function(found_device){
+		window.found_devices[ JSON.stringify(found_device.data) ] = found_device;
+	})
+
+}
+
+function selectDevice( element, checked ) {
+	var device_data = $(element).attr('data-data');
+	if( checked ) {
+		window.selected_devices.push( device_data );
+	} else {
+		window.selected_devices = window.selected_devices.filter(function(selected_device){
+			return (selected_device != device_data);
+		})
+	}
+	$(element)
+		.closest('.device')
+		.toggleClass( 'selected', checked )
+}
+
+function hideLoading() {
+	$('.list-devices-loading').fadeOut(200);
+}
+
+function filterDevices(device){
+	return typeof device.data !== 'undefined';
+}
+</script>
+
+<i class="loading list-devices-loading fa fa-cog fa-spin"></i>

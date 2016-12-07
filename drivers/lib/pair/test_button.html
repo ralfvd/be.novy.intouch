@@ -1,0 +1,30 @@
+<div class="centered-container">
+	<div id="image-container" class="toggle-pulse"></div>
+	<div id="button-container">
+		<button id="test_button" class="button"></button>
+	</div>
+	<div id="body"><span class="content"></span></div>
+</div>
+
+<script>
+	var idPrefix = '[data-id="' + options.id + '"] ';
+	$(idPrefix + '#body > span').html(__(options.body));
+	var $imageContainer = $(idPrefix + '#image-container');
+	$imageContainer.css('width', options.svgWidth).css('height', options.svgHeight);
+	var $testButton = $(idPrefix + '#test_button');
+
+	$imageContainer.html(options.svg);
+	$testButton.html(__(options.buttonLabel));
+	Homey.emit('test', function (err, device) {
+		if (err) {
+			Homey.alert(__(err.message || err));
+			return;
+		}
+
+		$testButton.on('click', () => Homey.emit('toggle'));
+		$imageContainer.highlight(device, options.initWithDeviceData ? device.data : false);
+		if (options.sendToggleOnInit) {
+			Homey.emit('toggle');
+		}
+	});
+</script>

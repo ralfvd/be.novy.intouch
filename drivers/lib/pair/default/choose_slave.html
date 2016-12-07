@@ -1,0 +1,84 @@
+<script type="text/x-jsrender" id="virtualdevices-list-template">
+
+	<fieldset>
+		<legend>{{:name}}</legend>
+
+		<ul class="deviceclasses-list">
+			{{include tmpl="#deviceclasses-list-template" ~virtualClasses=virtualClasses ~device_data=device_data /}}
+		</ul>
+
+	</fieldset>
+
+</script>
+
+<script type="text/x-jsrender" id="deviceclasses-list-template">
+
+	{{props ~virtualClasses}}
+	<li class="device" data-id="{{:key}}">
+		<label for='deviceClass-{{:~device_data}}-{{:key}}' class="name">
+			<span class="icon" style="-webkit-mask-image: url(/manager/devices/assets/icons/deviceclass/{{:key}}.svg)"></span>
+			<span class="name">{{:~i18n(prop.name)}}</span>
+		</label>
+		<label for='deviceClass-{{:~device_data}}-{{:key}}' class="checkbox">
+			<input name='deviceClass-{{:~device_data}}' id='deviceClass-{{:~device_data}}-{{:key}}' type="radio" value="{{:key}}" data-capabilities="{{:prop.capabilities}}" />
+		</label>
+	</li>
+	{{/props}}
+
+</script>
+
+<script type="text/javascript">
+// get driver default capabilities
+Homey.getCapabilities(function( err, capabilities ){
+
+	var devicesList = [];
+	var i = 0;
+
+	window.selected_devices.forEach(function(selected_device_data){
+
+		var selected_device = window.found_devices[ selected_device_data ];
+
+		// overwrite default capabilities with device capabilities, if set
+		capabilities = selected_device.capabilities || capabilities;
+
+		Homey.getVirtualClasses( capabilities, function( err, virtualClasses ){
+
+			if( selected_device.isSlaveCandidate !== false ) {
+				devicesList.push({
+					name			: selected_device.name,
+					device_data		: selected_device_data,
+					virtualClasses	: virtualClasses
+				});
+			}
+
+			if( ++i == window.selected_devices.length ) {
+
+				if( devicesList.length < 1 ) {
+					return Homey.nextView();
+				}
+
+				Homey.setTitle( __('manager.drivers.www.title_choose_slave') );
+
+				$('#virtualdevices-list').html(
+					$('#virtualdevices-list-template').render( devicesList, {
+						//stringify: JSON.stringify
+					})
+				);
+
+				// select all default checkboxes
+				$('.deviceclasses-list').each(function(){
+					$(this)
+						.find('li:first-child input[type="radio"]')
+						.prop('checked', true);
+				});
+			}
+
+		});
+
+	});
+
+
+});
+</script>
+
+<div id="virtualdevices-list"></div>

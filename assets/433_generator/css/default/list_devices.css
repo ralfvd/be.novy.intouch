@@ -1,0 +1,13 @@
+#devices-list {
+    overflow: auto;
+    max-height: 80%;
+    max-height: calc(100% - 10em);
+}
+
+.devices-list-loading-footer,
+.devices-list-footer {
+    text-align: center;
+    position: absolute;
+    bottom: 10em;
+    width: 100%;
+}

@@ -1,0 +1,80 @@
+<div class="centered-container">
+	<div id="codewheel-container"></div>
+	<div id="body"><span class="content"></span></div>
+</div>
+
+<script>
+	var $container = $('[data-id="' + options.id + '"] ');
+	$container.find('#body > span').html(__(options.body));
+	var $codewheelContainer = $container.find('#codewheel-container');
+	var codewheelElems = [];
+
+	function onCodewheelChange() {
+		Homey.emit('set_device_codewheels', codewheelElems.map(function (elem) {
+			return elem.getValue();
+		}));
+	}
+
+	if ($codewheelContainer.is(':empty')) {
+		options.codewheelList.map(function (codewheelOptions) {
+			var codewheelElem = $('<div>')
+				.addClass('codewheel')
+				.codewheel(Object.assign({ onChange: onCodewheelChange }, codewheelOptions));
+			codewheelElems.push(codewheelElem);
+			$codewheelContainer.append(codewheelElem);
+		});
+	}
+
+	if (!$container.find('.view-navigation-next.dummy').length) {
+		var $nextButton = $container.find('.view-navigation-next');
+		var $nextButtonDummy = $nextButton.clone().addClass('dummy');
+		$nextButton.hide();
+		$nextButton.parent().append($nextButtonDummy);
+
+		$nextButtonDummy.on('click', function (e) {
+			Homey.emit('assert_device', function (err, device) {
+				if (err) {
+					Homey.alert(__(err.message || err));
+					return;
+				}
+				Homey.emit('program_send', function (err) {
+					if (err) {
+						Homey.alert(__(err.message || err));
+						return;
+					}
+					const dataKey = JSON.stringify(device.data);
+					window.selected_devices = [dataKey];
+					window.found_devices = {};
+					window.found_devices[dataKey] = device;
+					$nextButtonDummy.siblings('.view-navigation-next').click();
+				});
+			});
+			e.stopPropagation();
+			return false;
+		});
+	}
+
+	Homey.emit('get_device', function (err, device) {
+		if (device && device.data && device.data.codewheelIndexes) {
+			device.data.codewheelIndexes.forEach(function (position, index) {
+				if (codewheelElems[index]) {
+					codewheelElems[index].setCodewheelIndex(position);
+				}
+			});
+		} else {
+			Homey.emit('program', function (err, device) {
+				if (device && device.data && device.data.codewheelIndexes) {
+					device.data.codewheelIndexes.forEach(function (position, index) {
+						if (codewheelElems[index]) {
+							codewheelElems[index].setCodewheelIndex(position);
+						}
+					});
+				} else {
+					Homey.emit('set_device_codewheels', codewheelElems.map(function (elem) {
+						return elem.getValue();
+					}));
+				}
+			});
+		}
+	});
+</script>
