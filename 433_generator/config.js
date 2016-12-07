@@ -18,8 +18,8 @@ module.exports = {
 				maximalLength: 18, // all signals should be of this length
 			},
 			debounceTimeout: 1000,
-			class: 'button',
-			capabilities: ['button'],
+			class: 'other',
+//			capabilities: ['button'],
 			pair: {
 				viewOrder: [
 					'generic_imitate',

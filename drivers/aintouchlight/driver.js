@@ -1,7 +1,7 @@
 'use strict';
 /* eslint-disable */
 const config = {
-	capabilities: ['button'],
+	capabilities: [],
 	pair: {
 		viewOrder: ['generic_imitate', 'generic_test_button_2', 'generic_done'],
 		views: [{
@@ -72,7 +72,7 @@ const config = {
 	driver: '../../433_generator/drivers/intouchlight.js',
 	signal: 'intouchlight',
 	debounceTimeout: 1000,
-	class: 'button',
+	class: 'other',
 	triggers: [{
 		id: 'aintouchlight:received',
 		title: 'Signal received from remote',
