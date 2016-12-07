@@ -1,0 +1,57 @@
+<script>
+var options = {
+	template: '../lib/pair/done.html',
+	id: 'generic_done',
+	title: 'views.generic_done.title'
+};
+Homey.setTitle(__(options.title || ''));
+Homey.emit('init', options.id);
+Homey.on('show_view', function(viewId){
+	Homey.showView(viewId);
+});
+Homey.on('close', function(){
+	Homey.close();
+});
+Homey.on('nextView', function(viewsIds){
+	var viewIndex = viewsIds.indexOf(options.id) + 1;
+	if(viewIndex > 0 && viewIndex < viewsIds.length){
+		Homey.showView(viewsIds[viewIndex]);
+	}
+});
+Homey.on('previousView', function(viewsIds){
+	var viewIndex = viewsIds.indexOf(options.id) - 1;
+	if(viewIndex >= 0){
+		Homey.showView(viewsIds[viewIndex]);
+	}
+});
+function nextView(){
+	if(options.next){
+		Homey.nextView();
+	}else{
+		Homey.emit('next');
+	}
+}
+</script>
+
+<script type="text/javascript">
+	Homey.emit('done', function (err, device) {
+		const dataKey = JSON.stringify(device.data);
+
+		var virtualDeviceClass;
+		$('.deviceclasses-list input:checked').each(function(){
+			if($(this).attr('name') === ('deviceClass-' + dataKey)){
+				virtualDeviceClass = $(this);
+			}
+		});
+		if (virtualDeviceClass) {
+			device.virtualClass = $(virtualDeviceClass).val();
+			device.virtualCapabilities = $(virtualDeviceClass).data('capabilities').split(',');
+		}
+
+		Homey.addDevice(device, function () {
+			Homey.done();
+		});
+	});
+</script>
+
+<i class="loading fa fa-cog fa-spin"></i>

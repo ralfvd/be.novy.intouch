@@ -1,36 +1,41 @@
 {
-  "id": "com.a.doorbell",
+  "id": "be.novy.intouch",
   "name": {
-    "en": "A Doorbell"
+    "en": "Novy Intouch"
   },
-  "version": "1.0.0",
+  "version": "0.0.1",
   "compatibility": ">=0.10",
   "author": {
-    "name": "Bas Kiers",
-    "email": "bas@athom.nl"
+    "name": "Ralf van Dooren",
+    "email": "ralfvd@gmail.com"
   },
   "signals": {
     "433": {
       "aDoorbell": {
         "sof": [
-          691
-        ],
-        "eof": [],
-        "words": [
-          [
-            332,
-            601
-          ],
-          [
-            668,
-            442
-          ]
-        ],
-        "interval": 10000,
-        "sensitivity": 0.9,
-        "repetitions": 20,
-        "minimalLength": 15,
-        "maximalLength": 17
+    		336,
+    		409
+    	],
+    	"eof": [
+    		335
+    	],
+    	"words": [
+    		[
+    			356,
+    			398
+    		],
+    		[
+    			710,
+    			756
+    		]
+    	],
+    	"interval": 10000,
+    	"sensitivity": 0.7,
+    	"repetitions": 20,
+    	"minimalLength": 17,
+    	"maximalLength": 17
+
+
       }
     }
   },
@@ -40,9 +45,9 @@
       "name": {
         "en": ""
       },
-      "class": "doorbell",
+      "class": "light",
       "capabilities": [
-        "alarm_generic"
+        "onoff"
       ],
       "images": {
         "small": "./433_generator/assets/adoorbell/images/small.jpg",
