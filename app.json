@@ -40,9 +40,9 @@
       "name": {
         "en": "Novy Intouch"
       },
-      "class": "other",
+      "class": "button",
       "capabilities": [
-        "other"
+        "button"
       ],
       "images": {
         "small": "./433_generator/assets/aintouchlight/images/small.jpg",
