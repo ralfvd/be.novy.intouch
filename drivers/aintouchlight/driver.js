@@ -34,7 +34,7 @@ const config = {
 				append: [],
 				svg: '../../433_generator/assets/aintouchlight/icon.svg',
 				title: 'Test the lights',
-				body: 'Press the test button ; your lights should toggle on/off',
+				body: 'Press the test button ; the lights should toggle on/off',
 				svgWidth: '80vw',
 				svgHeight: '70vh',
 				previous: true,
@@ -97,6 +97,6 @@ const Driver = require(config.driver);
 const driver = new Driver(config);
 module.exports = Object.assign(
   {},
-	driver.getExports(), 
+	driver.getExports(),
 	{ init: (devices, callback) => driver.init(module.exports, devices, callback) }
 );
