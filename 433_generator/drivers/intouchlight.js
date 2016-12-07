@@ -2,7 +2,7 @@
 
 const DefaultDriver = require('../../drivers/lib/driver.js');
 
-module.exports = class Doorbell extends DefaultDriver {
+module.exports = class Intouchlight extends DefaultDriver {
 	constructor(config) {
 		super(config);
 		this.toggleTimeout = {};
@@ -10,28 +10,22 @@ module.exports = class Doorbell extends DefaultDriver {
 	}
 
 	payloadToData(payload) { // Convert received data to usable variables
-		if (payload.length === 17) {
-			const data = {
-				address: this.bitArrayToString(payload.slice(1, 17)),
-				state: payload[1], // This is just a guesstimated bit since I do not own such a doorbell
-			};
-			data.id = data.address;
-			return data;
-		}
-		return null;
-	}
+	            const data = {
+	                address: this.bitArrayToString(payload),
+	            };
+	            data.id = data.address;
+	            return data;
+	        }
 
-	dataToPayload(data) { // Convert a data object to a bit array to be send
-		if (
-			data &&
-			data.address && data.address.length === 16 &&
-			typeof data.state !== 'undefined'
-		) {
-			const address = this.bitStringToBitArray(data.address);
-			return [Number(data.state)].concat(address);
-		}
-		return null;
-	}
+	    dataToPayload(data) { // Convert a data object to a bit array to be send
+	        if (
+	            data &&
+	            data.address && data.address.length === 18
+	        ) {
+	            return this.bitStringToBitArray(data.address);
+	        }
+	        return null;
+	    }
 
 	sendToggleAfterTimeout(deviceId, frame) {
 		if (
@@ -51,7 +45,7 @@ module.exports = class Doorbell extends DefaultDriver {
 
 	updateRealtime(device, state, oldState) {
 		if (Boolean(Number(state.state)) !== Boolean(Number(oldState.state))) {
-			this.realtime(device, 'generic_alarm', Boolean(Number(state.state)));
+			this.realtime(device, 'onoff', Boolean(Number(state.state)));
 		}
 	}
 

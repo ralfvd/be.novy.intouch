@@ -20,6 +20,27 @@
 					"title": "deviceClasses.doorbell.triggers.send.title"
 				}
 			}
+		},
+		"intouchlight": {
+			"views": {
+				"generic_imitate": {
+					"body": "deviceClasses.intouchlight.views.generic_imitate.body"
+				},
+				"generic_test_button": {
+					"title": "deviceClasses.intouchlight.views.generic_test_button.title"
+				},
+				"generic_test_button_2": {
+					"body": "deviceClasses.intouchlight.views.generic_test_button_2.body"
+				}
+			},
+			"triggers": {
+				"received": {
+					"title": "deviceClasses.intouchlight.triggers.received.title"
+				},
+				"send": {
+					"title": "deviceClasses.intouchlight.triggers.send.title"
+				}
+			}
 		}
 	},
 	"views": {

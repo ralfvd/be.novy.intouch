@@ -1,22 +1,24 @@
 <script type="text/javascript">
-	Homey.emit('done', function (err, device) {
-		const dataKey = JSON.stringify(device.data);
+	setTimeout(function () {
+		Homey.emit('done', function (err, device) {
+			var virtualDeviceClass;
+			$('.deviceclasses-list input:checked').each(function () {
+				if ($(this).attr('name').indexOf('"id":"' + device.data.id + '"') !== -1) {
+					console.log('hasVirtualDeviceClass@!');
+					virtualDeviceClass = $(this);
+				}
+			});
 
-		var virtualDeviceClass;
-		$('.deviceclasses-list input:checked').each(function(){
-			if($(this).attr('name') === ('deviceClass-' + dataKey)){
-				virtualDeviceClass = $(this);
+			if (virtualDeviceClass) {
+				device.virtualClass = $(virtualDeviceClass).val();
+				device.virtualCapabilities = $(virtualDeviceClass).data('capabilities').split(',');
 			}
-		});
-		if (virtualDeviceClass) {
-			device.virtualClass = $(virtualDeviceClass).val();
-			device.virtualCapabilities = $(virtualDeviceClass).data('capabilities').split(',');
-		}
 
-		Homey.addDevice(device, function () {
-			Homey.done();
+			Homey.addDevice(device, function () {
+				Homey.done();
+			});
 		});
-	});
+	}, 1000);
 </script>
 
 <i class="loading fa fa-cog fa-spin"></i>

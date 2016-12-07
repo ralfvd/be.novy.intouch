@@ -2,15 +2,15 @@
 /* eslint-disable */
 module.exports = {
 	devices: {
-		adoorbell: {
-			capabilities: ['alarm_generic'],
+		aintouchlight: {
+			capabilities: ['onoff'],
 			pair: {
 				viewOrder: ['generic_imitate', 'generic_test_button_2', 'generic_done'],
 				views: [{
 					template: './lib/pair/imitate.html',
 					options: {
-						svg: '../433_generator/assets/adoorbell/icon.svg',
-						body: 'deviceClasses.doorbell.views.generic_imitate.body',
+						svg: '../433_generator/assets/aintouchlight/icon.svg',
+						body: 'Press the light button; repeat until you get a green mark',
 						prepend: [],
 						append: [],
 						title: 'views.generic_imitate.title',
@@ -34,9 +34,9 @@ module.exports = {
 						sendToggleOnInit: false,
 						prepend: [],
 						append: [],
-						svg: '../433_generator/assets/adoorbell/bell.svg',
-						title: 'deviceClasses.doorbell.views.generic_test_button.title',
-						body: 'deviceClasses.doorbell.views.generic_test_button_2.body',
+						svg: '../433_generator/assets/aintouchlight/icon.svg',
+						title: 'Test the lights',
+						body: 'Press the test button ; your lights should toggle on/off',
 						svgWidth: '80vw',
 						svgHeight: '70vh',
 						previous: true,
@@ -67,32 +67,33 @@ module.exports = {
 				}]
 			},
 			images: {
-				small: '../433_generator/assets/adoorbell/images/small.jpg',
-				large: '../433_generator/assets/adoorbell/images/large.jpg'
+				small: '../433_generator/assets/aintouchlight/images/small.jpg',
+				large: '../433_generator/assets/aintouchlight/images/large.jpg'
 			},
-			id: 'adoorbell',
-			driver: '../433_generator/drivers/doorbell.js',
-			signal: 'aDoorbell',
+			id: 'aintouchlight',
+			driver: '../433_generator/drivers/intouchlight.js',
+			signal: 'intouchlight',
 			debounceTimeout: 1000,
-			class: 'doorbell',
+			class: 'light',
 			triggers: [{
-				id: 'adoorbell:received',
-				title: 'deviceClasses.doorbell.triggers.received.title',
+				id: 'aintouchlight:received',
+				title: 'Signal received from remote',
 				args: [{
 					name: 'device',
 					type: 'device',
-					filter: 'driver_id=adoorbell'
+					filter: 'driver_id=aintouchlight'
 				}]
 			}],
 			actions: [{
-				id: 'adoorbell:send',
-				title: 'deviceClasses.doorbell.triggers.send.title',
+				id: 'aintouchlight:send',
+				title: 'Send light command to the damper',
 				args: [{
 					name: 'device',
 					type: 'device',
-					filter: 'driver_id=adoorbell'
+					filter: 'driver_id=aintouchlight'
 				}]
-			}]
+			}],
+			name: 'Novy Intouch'
 		}
 	}
 };

@@ -11,47 +11,42 @@
   },
   "signals": {
     "433": {
-      "aDoorbell": {
+      "intouchlight": {
         "sof": [
-    		336,
-    		409
-    	],
-    	"eof": [
-    		335
-    	],
-    	"words": [
-    		[
-    			356,
-    			398
-    		],
-    		[
-    			710,
-    			756
-    		]
-    	],
-    	"interval": 10000,
-    	"sensitivity": 0.7,
-    	"repetitions": 20,
-    	"minimalLength": 17,
-    	"maximalLength": 17
-
-
+          336
+        ],
+        "eof": [],
+        "words": [
+          [
+            401,
+            711
+          ],
+          [
+            755,
+            357
+          ]
+        ],
+        "interval": 10000,
+        "sensitivity": 0.7,
+        "repetitions": 20,
+        "minimalLength": 18,
+        "maximalLength": 18
       }
     }
   },
   "drivers": [
     {
-      "id": "adoorbell",
+      "id": "aintouchlight",
       "name": {
-        "en": ""
+        "en": "Novy Intouch"
       },
       "class": "light",
       "capabilities": [
         "onoff"
       ],
       "images": {
-        "small": "./433_generator/assets/adoorbell/images/small.jpg",
-        "large": "./433_generator/assets/adoorbell/images/large.jpg"
+        "small": "./433_generator/assets/aintouchlight/images/small.jpg",
+        "large": "./433_generator/assets/aintouchlight/images/large.jpg"
       },
       "pair": [
         {
@@ -75,15 +70,15 @@
   "flow": {
     "triggers": [
       {
-        "id": "adoorbell:received",
+        "id": "aintouchlight:received",
         "title": {
-          "en": "deviceClasses.doorbell.triggers.received.title"
+          "en": "Signal received from remote"
         },
         "args": [
           {
             "name": "device",
             "type": "device",
-            "filter": "driver_id=adoorbell"
+            "filter": "driver_id=aintouchlight"
           }
         ]
       }
@@ -91,15 +86,15 @@
     "conditions": [],
     "actions": [
       {
-        "id": "adoorbell:send",
+        "id": "aintouchlight:send",
         "title": {
-          "en": "deviceClasses.doorbell.triggers.send.title"
+          "en": "Send light command to the damper"
         },
         "args": [
           {
             "name": "device",
             "type": "device",
-            "filter": "driver_id=adoorbell"
+            "filter": "driver_id=aintouchlight"
           }
         ]
       }

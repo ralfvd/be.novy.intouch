@@ -5,10 +5,10 @@ const config = {
 	pair: {
 		viewOrder: ['generic_imitate', 'generic_test_button_2', 'generic_done'],
 		views: [{
-			template: '../lib/pair/imitate.html',
+			template: '../../drivers/lib/pair/imitate.html',
 			options: {
-				svg: '../../433_generator/assets/adoorbell/icon.svg',
-				body: 'deviceClasses.doorbell.views.generic_imitate.body',
+				svg: '../../433_generator/assets/aintouchlight/icon.svg',
+				body: 'Press the light button; repeat until you get a green mark',
 				prepend: [],
 				append: [],
 				title: 'views.generic_imitate.title',
@@ -25,16 +25,16 @@ const config = {
 			append: [],
 			id: 'generic_imitate'
 		}, {
-			template: '../lib/pair/test_button.html',
+			template: '../../drivers/lib/pair/test_button.html',
 			options: {
 				next: 'generic_done',
 				initWithDeviceData: true,
 				sendToggleOnInit: false,
 				prepend: [],
 				append: [],
-				svg: '../../433_generator/assets/adoorbell/bell.svg',
-				title: 'deviceClasses.doorbell.views.generic_test_button.title',
-				body: 'deviceClasses.doorbell.views.generic_test_button_2.body',
+				svg: '../../433_generator/assets/aintouchlight/icon.svg',
+				title: 'Test the lights',
+				body: 'Press the test button ; your lights should toggle on/off',
 				svgWidth: '80vw',
 				svgHeight: '70vh',
 				previous: true,
@@ -53,7 +53,7 @@ const config = {
 			append: [],
 			id: 'generic_test_button_2'
 		}, {
-			template: '../lib/pair/done.html',
+			template: '../../drivers/lib/pair/done.html',
 			options: {
 				title: 'views.generic_done.title',
 				prepend: '',
@@ -65,37 +65,38 @@ const config = {
 		}]
 	},
 	images: {
-		small: '../../433_generator/assets/adoorbell/images/small.jpg',
-		large: '../../433_generator/assets/adoorbell/images/large.jpg'
+		small: '../../433_generator/assets/aintouchlight/images/small.jpg',
+		large: '../../433_generator/assets/aintouchlight/images/large.jpg'
 	},
-	id: 'intouch-light',
-	driver: '../../433_generator/drivers/doorbell.js',
-	signal: 'intouch-light',
+	id: 'aintouchlight',
+	driver: '../../433_generator/drivers/intouchlight.js',
+	signal: 'intouchlight',
 	debounceTimeout: 1000,
-	class: 'onoff',
+	class: 'light',
 	triggers: [{
-		id: 'intouch-light:received',
-		title: 'deviceClasses.doorbell.triggers.received.title',
+		id: 'aintouchlight:received',
+		title: 'Signal received from remote',
 		args: [{
 			name: 'device',
 			type: 'device',
-			filter: 'driver_id=intouch-light'
+			filter: 'driver_id=aintouchlight'
 		}]
 	}],
 	actions: [{
-		id: 'intouch-light:send',
-		title: 'deviceClasses.doorbell.triggers.send.title',
+		id: 'aintouchlight:send',
+		title: 'Send light command to the damper',
 		args: [{
 			name: 'device',
 			type: 'device',
-			filter: 'driver_id=intouch-light'
+			filter: 'driver_id=aintouchlight'
 		}]
-	}]
+	}],
+	name: 'Novy Intouch'
 };
 const Driver = require(config.driver);
 const driver = new Driver(config);
 module.exports = Object.assign(
   {},
-	driver.getExports(),
+	driver.getExports(), 
 	{ init: (devices, callback) => driver.init(module.exports, devices, callback) }
 );

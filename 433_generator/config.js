@@ -1,25 +1,25 @@
 module.exports = {
 	deviceClasses: {
-		doorbell: {
+		intouchlight: {
 			extends: 'generic_toggle',
-			driver: './drivers/doorbell.js',
+			driver: './drivers/intouchlight.js',
 			signal: {
-				id: 'aDoorbell',
-				sof: [364], // Start of frame
+				id: 'intouchlight',
+				sof: [336], // Start of frame
 				eof: [], // End of frame
 				words: [
-					[385, 1085], // 0
-					[1113, 358], // 1
+					[401, 711], // 0
+					[755, 357], // 1
 				],
 				interval: 10000, // Time between two subsequent signals. You can get this by trial and error. (most of the time the rule is: if it works it works)
-				sensitivity: 0.9, // between 0.0 and 2.0. This value indicates how far off the timings of the words can be and still be parsed (e.g. `1000, 300` is still parsable to word `1100, 390`)
+				sensitivity: 0.7, // between 0.0 and 2.0. This value indicates how far off the timings of the words can be and still be parsed (e.g. `1000, 300` is still parsable to word `1100, 390`)
 				repetitions: 20, // choose something that you like, more repetitions means sending takes longer but is more likely to arrive to the receiver
-				minimalLength: 17, // (35 - sof.length) / word[x].length
-				maximalLength: 17, // all signals should be of this length
+				minimalLength: 18, // (37 - sof.length) / word[x].length
+				maximalLength: 18, // all signals should be of this length
 			},
 			debounceTimeout: 1000,
-			class: 'doorbell',
-			capabilities: ['alarm_generic'],
+			class: 'light',
+			capabilities: ['onoff'],
 			pair: {
 				viewOrder: [
 					'generic_imitate',
@@ -28,36 +28,37 @@ module.exports = {
 				],
 				viewOptions: {
 					generic_imitate: {
-						svg: './assets/adoorbell/icon.svg',
-						body: 'deviceClasses.doorbell.views.generic_imitate.body',
+						svg: './assets/aintouchlight/icon.svg',
+						body: 'Press the light button; repeat until you get a green mark',
 					},
 					generic_test_button_2: {
-						svg: './assets/adoorbell/bell.svg',
-						title: 'deviceClasses.doorbell.views.generic_test_button.title',
-						body: 'deviceClasses.doorbell.views.generic_test_button_2.body',
+						svg: './assets/aintouchlight/icon.svg',
+						title: 'Test the lights',
+						body: 'Press the test button ; your lights should toggle on/off',
 					},
 				},
 			},
 			triggers: [
 				{
 					id: 'received',
-					title: 'deviceClasses.doorbell.triggers.received.title',
+					title: 'Signal received from remote',
 				},
 			],
 			actions: [
 				{
 					id: 'send',
-					title: 'deviceClasses.doorbell.triggers.send.title',
+					title: 'Send light command to the damper',
 				},
 			],
 		},
 	},
 	devices: {
-		adoorbell: {
-			extends: 'doorbell',
+		aintouchlight: {
+			extends: 'intouchlight',
+			name: 'Novy Intouch',
 			images: {
-				small: './assets/adoorbell/images/small.jpg',
-				large: './assets/adoorbell/images/large.jpg',
+				small: './assets/aintouchlight/images/small.jpg',
+				large: './assets/aintouchlight/images/large.jpg',
 			},
 		},
 	},
