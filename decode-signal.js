@@ -21,22 +21,29 @@ var test = [[21,146,42,221,41,146,148,242,369,440,677,777,348,404,704,762,346,41
 
 test = test.filter((arr) => arr.length === 37);
 test.forEach(function(value) {
-  console.log(value[0]);
+  console.log(value);
 });
 var sof = test.map(arr => arr.slice(0, 1)).reduce((result,arr) => arr.map((timing, index) =>
 (result[index] || 0) + (timing / test.length )));
 var words = [].concat.apply([], test.map(arr => arr.slice(1))).reduce((result, measurement, index,
 arr) => { if(index % 2 === 0){result[measurement > 400 ? 1 : 0].push(arr.slice(index, index +
 2)); } return result; }, {0: [], 1: [] });
-console.log(words);
+var deel2 = [].concat.apply([], test.map(arr => arr.slice(2,3))).reduce((result, measurement, index,
+arr) => { if(index % 2 === 0){result[measurement > 400 ? 1 : 0].push(arr.slice(index, index +
+2)); } return result; }, {0: [], 1: [] });
+
+//console.log(deel2)
+//console.log(eof);
+//console.log(words);
 var word0 = words[0].reduce((result, arr) => arr.map((timing, index) => (result[index] || 0) +
 timing)).map(timing => timing / words[0].length);
 var word1 = words[1].reduce((result, arr) => arr.map((timing, index) => (result[index] || 0) +
 timing)).map(timing => timing / words[1].length);
-//var word2 = words[2].reduce((result, arr) => arr.map((timing, index) => (result[index] || 0) +
-//timing)).map(timing => timing / words[2].length);
+var word2 = deel2[0].reduce((result, arr) => arr.map((timing, index) => (result[index] || 0) +
+timing)).map(timing => timing / deel2[0].length);
 
+console.log('result');
 console.log(sof);
 console.log(word0);
 console.log(word1);
-//console.log(word2);
+console.log(word2);
