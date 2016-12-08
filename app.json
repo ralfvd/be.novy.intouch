@@ -3,12 +3,22 @@
   "name": {
     "en": "Novy Intouch"
   },
-  "version": "0.0.1",
+  "description" : {
+     "en" : "Control Novy Intouch damper systems",
+     "nl" : "Bedien je Novy Intouch afzuigkap/dampkap"
+  },
+  "version": "0.0.2",
   "compatibility": ">=0.10",
   "author": {
     "name": "Ralf van Dooren",
     "email": "ralfvd@gmail.com"
   },
+  "images": {
+    "large": "./assets/images/large.jpg",
+    "small": "./assets/images/small.jpg"
+    },
+  "category": [ "appliances" ],
+  "dependencies": { },
   "signals": {
     "433": {
       "intouchlight": {
