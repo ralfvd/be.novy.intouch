@@ -56,6 +56,7 @@ Yes ;-)
 
 ### Changelog
 
+- V0.0.3 2017-06-05 : Update sensitivity_level to new Homey requirements
 - V0.0.2 2016-12-08 : First release to app store
 
 [pp-donate-link]: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ralf%40iae%2enl&lc=GB&item_name=homey%2dnovy&item_number=homey%2devohome&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted

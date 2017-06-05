@@ -7,7 +7,7 @@
      "en" : "Control Novy Intouch damper systems",
      "nl" : "Bedien je Novy Intouch afzuigkap/dampkap"
   },
-  "version": "0.0.2",
+  "version": "0.0.3",
   "compatibility": ">=0.10",
   "author": {
     "name": "Ralf van Dooren",
@@ -37,7 +37,7 @@
           ]
         ],
         "interval": 10000,
-        "sensitivity": 0.7,
+        "sensitivity": 0.5,
         "repetitions": 20,
         "minimalLength": 18,
         "maximalLength": 18

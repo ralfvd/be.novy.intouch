@@ -1,0 +1,86 @@
+{
+	"deviceClasses": {
+		"intouchlight": {
+			"views": {
+				"generic_test_button": {
+					"title": "deviceClasses.intouchlight.views.generic_test_button.title"
+				}
+			},
+			"triggers": {
+				"received": {
+					"title": "deviceClasses.intouchlight.triggers.received.title"
+				},
+				"send": {
+					"title": "deviceClasses.intouchlight.triggers.send.title"
+				}
+			}
+		}
+	},
+	"views": {
+		"generic_imitate": {
+			"title": "Kopieer het signaal van je afstandsbediening\u0000",
+			"body": "Druk op de licht knop; herhaal dit totdat je een groen vinkje ziet\u0000"
+		},
+		"generic_test_button_2": {
+			"title": "Controleer het licht\u0000",
+			"body": "Druk op de test knop ; het licht zou nu aan/uit moeten gaan\u0000"
+		},
+		"generic_done": {
+			"title": "Apparaat toevoegen!\u0000"
+		}
+	},
+	"433_generator": {
+		"generic": {
+			"on": "Aan\u0000",
+			"off": "Uit\u0000",
+			"left": "Links\u0000",
+			"middle": "Midden\u0000",
+			"right": "Rechts\u0000",
+			"up": "Omhoog\u0000",
+			"down": "Naar beneden\u0000",
+			"button_pressed": "De knop is ingedrukt\u0000",
+			"buttons": {
+				"1": "Knop 1\u0000",
+				"2": "Knop 2\u0000",
+				"3": "Knop 3\u0000",
+				"4": "Knop 4\u0000",
+				"5": "Knop 5\u0000",
+				"A": "Knop A\u0000",
+				"B": "Knop B\u0000",
+				"C": "Knop C\u0000",
+				"D": "Knop D\u0000",
+				"E": "Knop E\u0000",
+				"G": "Groep Knop\u0000",
+				"all": "Alle Knoppen\u0000",
+				"bright": "Helderheid Knop\u0000",
+				"dim": "Verduisteren Knop\u0000",
+				"left": "Linkse Knop\u0000",
+				"middle": "Middelste Knop\u0000",
+				"right": "Rechtse Knop\u0000"
+			},
+			"channels": {
+				"1": "Kanaal 1\u0000",
+				"2": "Kanaal 2\u0000",
+				"3": "Kanaal 3\u0000",
+				"4": "Kanaal 4\u0000",
+				"5": "Kanaal 5\u0000",
+				"I": "Kanaal I\u0000",
+				"II": "Kanaal II\u0000",
+				"III": "Kanaal III\u0000",
+				"IV": "Kanaal IV\u0000",
+				"V": "Kanaal V\u0000",
+				"A": "Kanaal A\u0000",
+				"B": "Kanaal B\u0000",
+				"C": "Kanaal C\u0000",
+				"D": "Kanaal D\u0000",
+				"E": "Kanaal E\u0000"
+			}
+		},
+		"error": {
+			"device_exists": "Deze afzuigkap is reeds gekoppeld aan Homey.\u0000",
+			"no_device": "Er is geen apparaat ingesteld om te koppelen. Sluit a.u.b. de koppelingsassistent en probeer het opnieuw.\u0000",
+			"no_settings": "Geen object instellingen. Probeer het a.u.b. opnieuw.\u0000",
+			"invalid_device": "Het gecreëerde apparaat is ongeldig. Probeer het a.u.b. opnieuw.\u0000"
+		}
+	}
+}
